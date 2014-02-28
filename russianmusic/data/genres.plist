@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Шансон</string>
+		<key>image</key>
+		<string>http://photo.tvigle.ru/crop/390x538/res/2013/11/14/74043ccf-4518-4f0c-8815-ffcabde00139.jpg</string>
+		<key>id</key>
+		<integer>0</integer>
+		<key>playlists</key>
+		<integer>8</integer>
+		<key>videos</key>
+		<integer>187</integer>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Рок</string>
+		<key>image</key>
+		<string>http://photo.tvigle.ru/crop/390x538/res/2013/11/14/43f0aeb5-2e44-40a5-897e-2021727ac270.jpg</string>
+		<key>id</key>
+		<integer>1</integer>
+		<key>playlists</key>
+		<integer>10</integer>
+		<key>videos</key>
+		<integer>573</integer>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Хип-Хоп</string>
+		<key>image</key>
+		<string>http://photo.tvigle.ru/crop/390x538/res/2013/11/14/87a7c560-3ee0-4285-a77c-c62bc55467d5.jpg</string>
+		<key>id</key>
+		<integer>2</integer>
+		<key>playlists</key>
+		<integer>15</integer>
+		<key>videos</key>
+		<integer>987</integer>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Поп</string>
+		<key>image</key>
+		<string>http://photo.tvigle.ru/crop/390x538/res/2013/11/14/12f2ba7f-4dec-424f-ba8f-b3d976b133ce.jpg</string>
+		<key>id</key>
+		<integer>3</integer>
+		<key>playlists</key>
+		<integer>11</integer>
+		<key>videos</key>
+		<integer>1035</integer>
+	</dict>
+</array>
+</plist>

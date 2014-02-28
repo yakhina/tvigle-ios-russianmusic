@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="6Rv-58-k5k">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Search View Controller-->
+        <scene sceneID="oBc-xN-q55">
+            <objects>
+                <viewController id="5JC-NH-vdg" customClass="RMSearchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2g3-Tg-w9s"/>
+                        <viewControllerLayoutGuide type="bottom" id="UOs-cS-A4Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZJb-hQ-dgN">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="975"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="HUg-a8-2qe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Bg-sx-OmB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2046" y="1435"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="pI7-pF-rhs">
+            <objects>
+                <tabBarController id="6Rv-58-k5k" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="leB-Tl-FKl">
+                        <rect key="frame" x="0.0" y="431" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="dEg-xH-fR3" kind="relationship" relationship="viewControllers" id="jKe-1t-oDR"/>
+                        <segue destination="Bmc-A6-ceH" kind="relationship" relationship="viewControllers" id="Sv1-C7-5wD"/>
+                        <segue destination="ccZ-R2-YsA" kind="relationship" relationship="viewControllers" id="XCc-Jf-Sba"/>
+                        <segue destination="5JC-NH-vdg" kind="relationship" relationship="viewControllers" id="b6d-2B-KqH"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WDX-xY-FBc" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="732" y="-1220"/>
+        </scene>
+        <!--Navigation Controller - Исполнители-->
+        <scene sceneID="bRA-hn-6a7">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="ccZ-R2-YsA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Исполнители" image="person_icon.png" id="nkc-lE-fHn"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="xwS-Tn-dQ5">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BMi-38-eut" kind="relationship" relationship="rootViewController" id="Upr-pV-Swp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SdC-0k-xTC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2094" y="123"/>
+        </scene>
+        <!--Artists List View Controller - Исполнители-->
+        <scene sceneID="bDt-UJ-7BJ">
+            <objects>
+                <tableViewController id="BMi-38-eut" customClass="RMArtistsListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="z4c-dF-Rmm">
+                        <rect key="frame" x="0.0" y="64" width="768" height="911"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="wue-Qm-LRN">
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="BMi-38-eut" id="Bb6-kV-WA1"/>
+                            </connections>
+                        </searchBar>
+                        <connections>
+                            <outlet property="dataSource" destination="BMi-38-eut" id="6lT-CY-zQg"/>
+                            <outlet property="delegate" destination="BMi-38-eut" id="jvF-mW-qb9"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Исполнители" id="yt4-KS-7qb"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="cj8-rW-8jV" id="NRO-ii-gPa"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nvp-cX-yzn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="cj8-rW-8jV">
+                    <connections>
+                        <outlet property="delegate" destination="BMi-38-eut" id="ezX-TL-XQD"/>
+                        <outlet property="searchBar" destination="wue-Qm-LRN" id="qG2-wA-3U0"/>
+                        <outlet property="searchContentsController" destination="BMi-38-eut" id="n7u-X2-VoX"/>
+                        <outlet property="searchResultsDataSource" destination="BMi-38-eut" id="ilq-QZ-2JI"/>
+                        <outlet property="searchResultsDelegate" destination="BMi-38-eut" id="0Pt-mj-aZX"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="3165" y="152"/>
+        </scene>
+        <!--Navigation Controller - Жанры-->
+        <scene sceneID="8cK-3m-PIX">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="Bmc-A6-ceH" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Жанры" image="music_icon.png" id="jhv-Gt-AP8"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="jwO-S6-3w1">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="uUM-ft-raA" kind="relationship" relationship="rootViewController" id="Yfd-L6-1KN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gF3-yT-vAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2094" y="-1301"/>
+        </scene>
+        <!--Navigation Controller - Настроение-->
+        <scene sceneID="fb6-zd-ceR">
+            <objects>
+                <navigationController autoresizesArchivedViewToFullSize="NO" title="Настроение" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="dEg-xH-fR3" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <tabBarItem key="tabBarItem" title="Настроение" image="happy_icon.png" id="vW1-4z-dfK"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="gon-jI-tI2">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="N9f-oc-UTE" kind="relationship" relationship="rootViewController" id="XkE-yu-6T1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1an-m3-Pq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2054" y="-2551"/>
+        </scene>
+        <!--Mood View Controller - Настроение-->
+        <scene sceneID="EIa-Cn-7o7">
+            <objects>
+                <viewController autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" id="N9f-oc-UTE" customClass="RMMoodViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hkt-Pe-P4c"/>
+                        <viewControllerLayoutGuide type="bottom" id="3K7-sR-FOU"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="top" id="LSo-xf-kOa" customClass="UIScrollWrapperView">
+                        <rect key="frame" x="0.0" y="64" width="768" height="911"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="Z7j-ng-oB3">
+                                <rect key="frame" x="10" y="20" width="718" height="871"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <collectionView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="34C-cz-TGz">
+                                        <rect key="frame" x="20" y="0.0" width="260" height="871"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="lds-2J-9in">
+                                            <size key="itemSize" width="260" height="415"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionCell" id="lx8-RZ-6YO" customClass="RMCollectionCell">
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="415"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="415"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e0D-LU-8o6">
+                                                            <rect key="frame" x="0.0" y="0.0" width="280" height="415"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="cardPoster" destination="e0D-LU-8o6" id="xGf-hd-4xT"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="N9f-oc-UTE" id="gD3-EE-znA"/>
+                                            <outlet property="delegate" destination="N9f-oc-UTE" id="j5z-PX-wNC"/>
+                                        </connections>
+                                    </collectionView>
+                                </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="N9f-oc-UTE" id="sio-wW-lp9"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Настроение" id="LBh-nh-n2y"/>
+                    <connections>
+                        <outlet property="collectionView" destination="34C-cz-TGz" id="wRQ-Qh-2Fv"/>
+                        <outlet property="scrollView" destination="Z7j-ng-oB3" id="z9S-zi-yaz"/>
+                        <outlet property="view" destination="LSo-xf-kOa" id="E9g-q4-Lgk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xmy-ZN-46X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3110" y="-2524"/>
+        </scene>
+        <!--Genres View Controller - Настроение-->
+        <scene sceneID="ogl-3b-Mfe">
+            <objects>
+                <viewController autoresizesArchivedViewToFullSize="NO" id="uUM-ft-raA" customClass="RMGenresViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Sr-IB-VXI"/>
+                        <viewControllerLayoutGuide type="bottom" id="aB1-aG-wli"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="Tnj-Z9-drx" customClass="UIScrollWrapperView">
+                        <rect key="frame" x="0.0" y="64" width="768" height="911"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" directionalLockEnabled="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="PXn-It-fKo">
+                                <rect key="frame" x="10" y="0.0" width="718" height="911"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <collectionView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BwM-nX-rFV">
+                                        <rect key="frame" x="20" y="0.0" width="260" height="911"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="f7W-E6-Sxk">
+                                            <size key="itemSize" width="260" height="455"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionCell" id="Laz-Hs-eNw" customClass="RMCollectionCell">
+                                                <rect key="frame" x="0.0" y="0.0" width="260" height="455"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="455"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLx-bd-gfI">
+                                                            <rect key="frame" x="0.0" y="30" width="280" height="400"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="cardPoster" destination="oLx-bd-gfI" id="6Us-bV-iLs"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="uUM-ft-raA" id="SeU-J7-z0J"/>
+                                            <outlet property="delegate" destination="uUM-ft-raA" id="OHC-9O-IsM"/>
+                                        </connections>
+                                    </collectionView>
+                                </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="uUM-ft-raA" id="5qs-XA-7A5"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Настроение" id="Hj0-tM-ZNu"/>
+                    <connections>
+                        <outlet property="collectionView" destination="BwM-nX-rFV" id="Wbg-rW-sZQ"/>
+                        <outlet property="scrollView" destination="PXn-It-fKo" id="FY7-hP-6Hw"/>
+                        <outlet property="view" destination="Tnj-Z9-drx" id="e8z-2r-OIM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tsY-B9-M3e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3086" y="-1237"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="happy_icon.png" width="25" height="25"/>
+        <image name="music_icon.png" width="25" height="25"/>
+        <image name="person_icon.png" width="25" height="25"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

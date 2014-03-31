@@ -29,6 +29,20 @@
     self.videosData = [[NSArray alloc] initWithContentsOfFile:filePath];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showPlaylistTitle"])
+    {
+        NSIndexPath *indexPath = [self.resultsTable indexPathForSelectedRow];
+        RMVideoViewController *videoVC = segue.destinationViewController;
+        NSMutableDictionary *artist = [self.searchResults objectAtIndex:indexPath.row];
+        videoVC.navigationItem.title = [[artist objectForKey:@"artist"] capitalizedString];
+        videoVC.isArtistVideo = YES;
+    }
+}
+
+#pragma mark - TableView delegate & datasource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.searchResults.count;
@@ -68,6 +82,12 @@
     [searchBar resignFirstResponder];
 }
 
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     if (!self.searchResults.count)
@@ -91,6 +111,7 @@
     }
 }
 
+
 - (void)filterContentForSearchText:(NSString*)searchText
 {
     NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(self.name contains[c] %@) || (self.artist contains[c] %@)", searchText, searchText];
@@ -108,31 +129,6 @@
     
     [self.resultsTable reloadData];
     
-}
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showPlaylistTitle"])
-    {
-        NSIndexPath *indexPath = [self.resultsTable indexPathForSelectedRow];
-        RMVideoViewController *videoVC = segue.destinationViewController;
-        NSMutableDictionary *artist = [self.searchResults objectAtIndex:indexPath.row];
-        videoVC.navigationItem.title = [[artist objectForKey:@"artist"] capitalizedString];
-    }
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setHidden:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [self.navigationController.navigationBar setHidden:NO];
-    [super viewWillDisappear:animated];
 }
 
 @end

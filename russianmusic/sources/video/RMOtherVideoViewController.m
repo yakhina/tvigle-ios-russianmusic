@@ -23,7 +23,7 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"videos" ofType:@"plist"];
     
     self.videosData = [[[NSArray alloc] initWithContentsOfFile:filePath] mutableCopy];
-    
+
     [self.tableView reloadData];
 }
 
@@ -35,22 +35,23 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return section == 0 ? @"" : @"ДРУГИЕ КЛИПЫ СБОРНИКА";
+    NSString *title = self.isArtistList ? [NSString stringWithFormat:@"ДРУГИЕ КЛИПЫ %@", [self.nextPlaylistData objectForKey:@"title"]] : @"ДРУГИЕ КЛИПЫ СБОРНИКА";
+    return section == 1 ? title : @"";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == 0 ? 50 : 80;
+    return indexPath.section == 1 ? 80 : 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : self.videosData.count;
+    return section == 1 ? self.videosData.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -68,13 +69,14 @@
         
         NSDictionary *video = self.videosData[indexPath.row];
         
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.textLabel.text = [video objectForKey:@"name"];
         cell.detailTextLabel.text = [[video objectForKey:@"artist"] capitalizedString];
         
         return cell;
     }
     
-    else
+    else if (indexPath.section == 1)
     {
         RMVideoCell *cell;
         
@@ -89,9 +91,43 @@
             cell = [[RMVideoCell alloc] init];
         }
         
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.videoName.text = [video objectForKey:@"name"];
         cell.artistName.text = [(NSString *)[video objectForKey:@"artist"] capitalizedString];
         [cell.screenshot setImageWithURL:[NSURL URLWithString:[video objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"empty_artist"]];
+        
+        cell.layer.borderColor = [UIColor clearColor].CGColor;
+        
+        if (indexPath.row == 0)
+        {
+            cell.layer.borderColor = [UIColor colorWithRed:53/255 green:123/255 blue:255/255 alpha:1.0].CGColor;
+            cell.layer.borderWidth = 2.0;
+        }
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *CellIdentifier3 = @"VideoButtonCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier3];
+        
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier3];
+        }
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        if (self.isArtistList)
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"Еще от %@", [self.nextPlaylistData objectForKey:@"title"]] ;
+            cell.detailTextLabel.text = @"Сборник «Романтика»";
+        }
+        else
+        {
+            cell.textLabel.text = @"К следующему сборнику";
+            cell.detailTextLabel.text = @"«Романтика»";
+        }
         
         return cell;
     }
@@ -100,7 +136,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0)
+    if (indexPath.row == 0 || indexPath.section != 1)
     {
         return NO;
     }

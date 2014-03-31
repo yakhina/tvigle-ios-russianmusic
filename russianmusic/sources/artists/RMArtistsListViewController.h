@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SINavigationMenuView.h"
 
-@interface RMArtistsListViewController : UITableViewController <UISearchBarDelegate>
+@interface RMArtistsListViewController : UITableViewController <UISearchBarDelegate, SINavigationMenuDelegate>
 
 @end

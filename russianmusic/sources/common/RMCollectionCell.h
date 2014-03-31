@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) IBOutlet UIImageView *cardPoster;
 @property (nonatomic, strong) IBOutlet UILabel *cardTitle;
+@property (nonatomic, strong) IBOutlet UILabel *cardSubtitle;
 
 @end

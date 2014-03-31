@@ -16,10 +16,14 @@
 @interface RMArtistsListViewController ()
 
 @property (nonatomic, assign) BOOL isSearching;
+@property (nonatomic, assign) int filterIndex;
+@property (nonatomic, strong) SINavigationMenuView *filterMenu;
 @property (nonatomic, strong) NSMutableArray *firstLetters;
+@property (nonatomic, strong) NSMutableArray *firstGenresLetters;
 @property (nonatomic, strong) NSArray *rawArtistsData;
 @property (nonatomic, strong) NSMutableArray *artistsData;
 @property (nonatomic, strong) NSMutableArray *filteredData;
+@property (nonatomic, strong) NSMutableArray *genresData;
 
 @end
 
@@ -29,6 +33,7 @@
 {
     if (self = [super initWithCoder:aDecoder])
     {
+        self.filterIndex = -1;
         self.filteredData = [[NSMutableArray alloc] init];
     }
     return self;
@@ -43,6 +48,8 @@
     self.searchDisplayController.searchBar.delegate = self;
     
     [self prepareArtistsData];
+    
+    [self configureFilter];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -53,7 +60,33 @@
         RMVideoViewController *videoVC = segue.destinationViewController;
         NSMutableDictionary *artist = self.isSearching ? [self.filteredData objectAtIndex:indexPath.row] : [[self.artistsData[indexPath.section] objectForKey:@"artists"] objectAtIndex:indexPath.row];
         videoVC.navigationItem.title = [artist objectForKey:@"name"];
+        videoVC.isArtistVideo = YES;
     }
+}
+
+#pragma mark - Filter
+
+
+- (void)configureFilter
+{
+    CGRect frame = CGRectMake(0.0, 0.0, 200.0, self.navigationController.navigationBar.bounds.size.height);
+    
+    self.filterMenu = [[SINavigationMenuView alloc] initWithFrame:frame title:@"Все исполнители"];
+    
+    [self.filterMenu displayMenuInView:self.parentViewController.view];
+    
+    self.filterMenu.items = @[@"Все исполнители", @"Поп", @"Хип-хоп", @"Рок", @"Шансон"];
+    
+    self.filterMenu.delegate = self;
+    
+    self.navigationItem.titleView = self.filterMenu;
+}
+
+- (void)didSelectItemAtIndex:(NSUInteger)index
+{
+    self.filterIndex = (int)index - 1;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableView DataSource & Delegate
@@ -65,32 +98,69 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    self.isSearching = tableView != self.tableView;
-    return self.isSearching ? @[] : self.firstLetters;
+    if (self.isSearching)
+    {
+        return @[];
+    }
+    else if (self.filterIndex >= 0)
+    {
+        return self.firstGenresLetters[self.filterIndex];
+    }
+    else
+    {
+        return self.firstLetters;
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    self.isSearching = tableView != self.tableView;
-    return self.isSearching ? 1 : self.artistsData.count;
+    if (self.isSearching)
+    {
+        return 1;
+    }
+    else if (self.filterIndex >= 0)
+    {
+        
+        return [self.genresData[self.filterIndex] count];
+    }
+    else
+    {
+        return self.firstLetters.count;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    self.isSearching = tableView != self.tableView;
-    return self.isSearching ? @"" : [self.artistsData[section] objectForKey: @"key"];
+    if (self.isSearching)
+    {
+        return @"";
+    }
+    else if (self.filterIndex >= 0)
+    {
+        return [self.genresData[self.filterIndex][section] objectForKey:@"key"];
+    }
+    else
+    {
+        return [self.artistsData[section] objectForKey: @"key"];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    self.isSearching = tableView != self.tableView;
-    return self.isSearching ? self.filteredData.count : [[self.artistsData[section] objectForKey:@"artists"] count];
+    if (self.isSearching)
+    {
+        return self.filteredData.count;
+    }
+    else if (self.filterIndex >= 0)
+    {
+        return [[self.genresData[self.filterIndex][section] objectForKey:@"artists"] count];
+    }
+    
+    return [[self.artistsData[section] objectForKey:@"artists"] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.isSearching = tableView != self.tableView;
-    
     RMArtistCell *cell;
     
     NSMutableDictionary *artist;
@@ -102,6 +172,10 @@
     if (self.isSearching)
     {
         artist = self.filteredData[indexPath.row];
+    }
+    else if (self.filterIndex >= 0)
+    {
+        artist = [self.genresData[self.filterIndex][indexPath.section] objectForKey:@"artists"][indexPath.row];
     }
     else
     {
@@ -132,20 +206,57 @@
 {
     self.firstLetters = [[NSMutableArray alloc] init];
     self.artistsData = [[NSMutableArray alloc] init];
+    self.genresData = [[NSMutableArray alloc] initWithCapacity:4];
+    self.firstGenresLetters = [[NSMutableArray alloc] initWithCapacity:4];
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"artists" ofType:@"plist"];
     self.rawArtistsData = [[NSArray alloc] initWithContentsOfFile:filePath];
     
-    for (NSDictionary *artist in self.rawArtistsData)
+    
+    for (int i = 0; i < 4; i++)
     {
+        [self.genresData addObject:[NSMutableArray array]];
+        [self.firstGenresLetters addObject:[NSMutableArray array]];
+    }
+    
+    for (int i = 0; i < self.rawArtistsData.count; i++)
+    {
+        NSDictionary *artist = self.rawArtistsData[i];
+        
         NSString *first = [[artist objectForKey:@"name"] substringToIndex:1];
         
         BOOL inArray = [self.firstLetters containsObject:first];
+        
         
         NSMutableDictionary *newArtist = [@{
                                             @"name" : [artist objectForKey:@"name"],
                                             @"image" : [artist objectForKey:@"image"],
                                            } mutableCopy];
+        
+        
+        NSMutableDictionary *letterData = [@{
+                                             @"key" : first,
+                                             @"artists" : [@[newArtist] mutableCopy],
+                                             } mutableCopy];
+        
+        
+        
+        NSUInteger genreIndex = arc4random_uniform(4);
+        
+        BOOL inGenreArray = [self.firstGenresLetters[genreIndex] containsObject:first];
+        
+        if (inGenreArray)
+        {
+            NSUInteger index = [self.firstGenresLetters[genreIndex] indexOfObject:first];
+            NSMutableDictionary *foundLetterData = [self.genresData[genreIndex] objectAtIndex:index];
+            NSMutableArray *foundLetterArtists = [foundLetterData objectForKey:@"artists"];
+            [foundLetterArtists addObject:newArtist];
+        }
+        else
+        {
+            [self.firstGenresLetters[genreIndex] addObject:first];
+            [(NSMutableArray *)self.genresData[genreIndex] addObject:letterData];
+        }
         
         if (inArray)
         {
@@ -156,26 +267,59 @@
         }
         else
         {
-            NSMutableDictionary *letterData = [@{
-                                                 @"key" : first,
-                                                 @"artists" : [@[newArtist] mutableCopy],
-                                                 } mutableCopy];
             
             [self.firstLetters addObject:first];
             [self.artistsData addObject:letterData];
         }
     }
+    
 }
 
 
 #pragma mark - Searching
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar sizeToFit];
+    [searchBar setShowsCancelButton:YES animated:YES];
+    
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar sizeToFit];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    
+    return YES;
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    self.isSearching = NO;
+    [searchBar resignFirstResponder];
+    [self.searchDisplayController setActive:NO];
+}
+
 -(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
 {
-    if(text.length != 0)
+    if (text.length != 0)
     {
+        self.isSearching = YES;
         [self filterContentForSearchText:text];
+        [self.filterMenu reset];
     }
+    else
+    {
+        self.isSearching = NO;
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText
@@ -189,17 +333,6 @@
         NSArray *filteredArray = [artists filteredArrayUsingPredicate:searchPredicate];
         [self.filteredData addObjectsFromArray:filteredArray];
     }
-}
-
-#pragma mark - UISearchDisplayController Delegate Methods
-
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    controller.searchResultsTableView.dataSource = self;
-    controller.searchResultsTableView.delegate = self;
-    [self filterContentForSearchText:searchString];
-    
-    return YES;
 }
 
 

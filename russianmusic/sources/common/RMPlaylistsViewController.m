@@ -18,15 +18,6 @@
 
 @implementation RMPlaylistsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self)
-    {
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,6 +54,16 @@
 
 #pragma mark - Table view data source
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.0;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -70,7 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.playlistData.count;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,8 +91,8 @@
         cell = [[RMPlaylistCell alloc] init];
     }
     
-    
     cell.playlistTitle.text = [playlist objectForKey:@"name"];
+    
     cell.videosCount.text = [NSString stringWithFormat:@"%@ клипов", [playlist objectForKey:@"count"]];
     
     [cell.playlistPoster setImageWithURL:[NSURL URLWithString:[playlist objectForKey:@"image"]] placeholderImage:[UIImage imageNamed:@"blend"]];

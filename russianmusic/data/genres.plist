@@ -13,6 +13,8 @@
 		<integer>8</integer>
 		<key>videos</key>
 		<integer>187</integer>
+		<key>cover</key>
+		<string>http://photo.tvigle.ru/res/2013/11/18/c45289f8-3ef8-46a4-a6d9-c2dbb6face90.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -25,6 +27,8 @@
 		<integer>10</integer>
 		<key>videos</key>
 		<integer>573</integer>
+		<key>cover</key>
+		<string>http://photo.tvigle.ru/res/2013/11/18/a7f1da80-b01e-406e-a7c7-c6d381c5c31a.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -37,6 +41,8 @@
 		<integer>15</integer>
 		<key>videos</key>
 		<integer>987</integer>
+		<key>cover</key>
+		<string>http://photo.tvigle.ru/res/2013/11/18/e0329488-3e24-4636-bdc5-25b9ac815405.jpg</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -49,6 +55,8 @@
 		<integer>11</integer>
 		<key>videos</key>
 		<integer>1035</integer>
+		<key>cover</key>
+		<string>http://photo.tvigle.ru/res/2013/11/18/316e2cab-7d48-45da-9211-13890bfaa61e.jpg</string>
 	</dict>
 </array>
 </plist>

@@ -11,5 +11,7 @@
 @interface RMOtherVideoViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *videosData;
+@property (nonatomic, assign) BOOL isArtistList;
+@property (nonatomic, strong) NSDictionary *nextPlaylistData;
 
 @end

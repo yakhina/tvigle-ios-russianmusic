@@ -337,6 +337,7 @@
 - (void)setBlurEnabled:(BOOL)blurEnabled
 {
     _blurEnabledSet = YES;
+    
     if (_blurEnabled != blurEnabled)
     {
         _blurEnabled = blurEnabled;

@@ -107,7 +107,7 @@
     }
     
     [cell setBackgroundColor:[UIColor whiteColor]];
-    cell.cardTitle.text = [NSString stringWithFormat:@"%@ сборников и %@ видео", [mood objectForKey:@"playlists"], [mood objectForKey:@"videos"]];
+    cell.cardSubtitle.text = [NSString stringWithFormat:@"%@ сборников и %@ видео", [mood objectForKey:@"playlists"], [mood objectForKey:@"videos"]];
     [cell.cardPoster setImageWithURL:[NSURL URLWithString:[mood objectForKey:@"image"]] placeholderImage:nil];
     return cell;
 }
